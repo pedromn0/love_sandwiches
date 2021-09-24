@@ -15,6 +15,10 @@ SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 def get_sales_data():
     """
     Get sales figures input from the user
+    Run a while loop to collect valid data from the user through the input.
+    Check if the data has 6 values and if they all are intengers.
+    The data is split in a list separated by commas.
+    The loop persist until the checks are True.
     """
     while True:
         print("Please enter sales data from the last market")
@@ -49,7 +53,19 @@ def validate_data(values):
     
     return True
 
-    print(values)
+def update_sales_worksheet(data):
+    """
+    Updata worksheet sales in google sheet love_sandwiches
+    and add a new row with the data input from the user.
+    """
+
+    print("Updating sales worksheet...\n")
+    sales_worksheet = SHEET.worksheet("sales")
+    sales_worksheet.append_row(data)
+    print("Sales worksheet updated successfully\n")
+
 
 
 data = get_sales_data()
+sales_data = [int(num) for num in data]
+update_sales_worksheet(sales_data)
